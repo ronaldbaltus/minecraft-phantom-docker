@@ -1,14 +1,14 @@
 ARG ARCH=
 FROM $ARCH/debian:buster-slim
-ARG VERSION 0.5.3
+ARG ARCH
+ARG VERSION=0.5.3
 ENV MCSERVER localhost:19132
 RUN apt-get update && apt-get install -y wget
 RUN mkdir -p /phantom && cd /phantom
 RUN echo $ARCH
 WORKDIR /phantom
 
-RUN ARCH=$(dpkg --print-architecture); \
-    if [ "$ARCH" = "amd64" ]; then POSTURL="phantom-linux"; \
+RUN if [ "$ARCH" = "amd64" ]; then POSTURL="phantom-linux"; \
     elif [ "$ARCH" = "arm32v5" ]; then POSTURL="phantom-linux-arm5"; \
     elif [ "$ARCH" = "arm32v6" ]; then POSTURL="phantom-linux-arm6"; \
     elif [ "$ARCH" = "arm32v7" ]; then POSTURL="phantom-linux-arm7"; \
